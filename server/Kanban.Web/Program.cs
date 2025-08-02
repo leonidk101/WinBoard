@@ -16,9 +16,12 @@ builder.Services
     .AddRoles<ApplicationRole>()
     .AddEntityFrameworkStores<KanbanDbContext>();
 
+builder.Services.AddHealthChecks();
+
 var app = builder.Build();
 
 app.MapIdentityApi<ApplicationUser>();
+app.MapHealthChecks("/health");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

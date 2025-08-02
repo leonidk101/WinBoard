@@ -13,7 +13,7 @@ public class Board
     [MaxLength(500)]
     public string? Description { get; set; }
 
-    public string? CreatedByUserId { get; set; } = null!;
+    public string? CreatedById { get; set; } = null!;
 
     public ApplicationUser? CreatedBy { get; set; }
     

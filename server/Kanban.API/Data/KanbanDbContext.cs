@@ -11,7 +11,7 @@ public class KanbanDbContext : IdentityDbContext<ApplicationUser, ApplicationRol
     }
     
     public DbSet<Board> Boards { get; set; } = null!;
-    
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -25,5 +25,20 @@ public class KanbanDbContext : IdentityDbContext<ApplicationUser, ApplicationRol
             entity.Property(e => e.CreatedAt).HasDefaultValueSql("NOW()");
             entity.Property(e => e.UpdatedAt).HasDefaultValueSql("NOW()");
         });
+
+        modelBuilder.Entity<ApplicationRole>().HasData(
+            new ApplicationRole
+            {
+                Id = "1",
+                Name = "Admin",
+                NormalizedName = "ADMIN"
+            },
+            new ApplicationRole
+            {
+                Id = "2",
+                Name = "User",
+                NormalizedName = "USER"
+            }
+        );
     }
 }

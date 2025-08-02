@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Kanban.API.Migrations
 {
     [DbContext(typeof(KanbanDbContext))]
-    [Migration("20250802212838_Init")]
+    [Migration("20250802214811_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -49,6 +49,20 @@ namespace Kanban.API.Migrations
                         .HasDatabaseName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "1",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "2",
+                            Name = "User",
+                            NormalizedName = "USER"
+                        });
                 });
 
             modelBuilder.Entity("Kanban.API.Models.ApplicationUser", b =>

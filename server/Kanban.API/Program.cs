@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Kanban.API.Data;
 using Kanban.API.Models;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +13,20 @@ builder.Services.AddDbContext<KanbanDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services
-    .AddIdentityApiEndpoints<ApplicationUser>()
+    .AddIdentityApiEndpoints<ApplicationUser>(options =>
+    {
+        options.Password.RequiredLength = 1;
+        options.Password.RequireDigit = false;
+        options.Password.RequireUppercase = false;
+        options.Password.RequireLowercase = false;
+        options.Password.RequireNonAlphanumeric = false;
+        options.Password.RequiredUniqueChars = 0;
+        
+        options.User.RequireUniqueEmail = false;
+
+        options.SignIn.RequireConfirmedEmail = false;
+        options.SignIn.RequireConfirmedPhoneNumber = false;
+    })
     .AddRoles<ApplicationRole>()
     .AddEntityFrameworkStores<KanbanDbContext>();
 

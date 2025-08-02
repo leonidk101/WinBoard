@@ -1,9 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using Kanban.Web.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace Kanban.Web.Data;
 
-public class KanbanDbContext : DbContext
+public class KanbanDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
 {
     public KanbanDbContext(DbContextOptions<KanbanDbContext> options) : base(options)
     {

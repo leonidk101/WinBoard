@@ -1,22 +1,39 @@
 using Microsoft.EntityFrameworkCore;
 using Kanban.Web.Data;
+using Kanban.Web.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
-// Add Entity Framework
+builder.Services.AddSwaggerGen();
+
 builder.Services.AddDbContext<KanbanDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+builder.Services
+    .AddIdentityApiEndpoints<ApplicationUser>()
+    .AddRoles<ApplicationRole>()
+    .AddEntityFrameworkStores<KanbanDbContext>();
+
 var app = builder.Build();
+
+app.MapIdentityApi<ApplicationUser>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+
+    app.UseSwagger();
+    app.UseSwaggerUI();
+
+    app.UseReDoc(c =>
+    {
+        c.DocumentTitle = "Kanban API Documentation";
+        c.SpecUrl = "/swagger/v1/swagger.json";
+        c.RoutePrefix = "redoc";
+    });
 }
 
 app.UseHttpsRedirection();

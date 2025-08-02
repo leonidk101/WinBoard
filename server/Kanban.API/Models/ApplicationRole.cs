@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 
-namespace Kanban.Web.Models
+namespace Kanban.API.Models
 {
     public class ApplicationRole : IdentityRole
     {

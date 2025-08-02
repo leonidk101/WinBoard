@@ -6,6 +6,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <NoWarn>$(NoWarn);1591</NoWarn>
+    <RootNamespace>Kanban.API</RootNamespace>
+    <AssemblyName>Kanban.API</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

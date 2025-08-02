@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
-using Kanban.Web.Models;
+using Kanban.API.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
-namespace Kanban.Web.Data;
+namespace Kanban.API.Data;
 
 public class KanbanDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
 {

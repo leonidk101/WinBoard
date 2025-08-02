@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Kanban.Web.Models;
+namespace Kanban.API.Models;
 
 public class Card
 {

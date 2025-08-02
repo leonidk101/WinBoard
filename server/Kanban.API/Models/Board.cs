@@ -1,8 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Kanban.Web.Models;
+namespace Kanban.API.Models;
 
-public class Column
+public class Board
 {
     public int Id { get; set; }
     
@@ -10,14 +10,12 @@ public class Column
     [MaxLength(100)]
     public string Name { get; set; } = string.Empty;
     
-    public int Position { get; set; }
-    
-    public int BoardId { get; set; }
+    [MaxLength(500)]
+    public string? Description { get; set; }
     
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
     
     // Navigation properties
-    public Board Board { get; set; } = null!;
-    public ICollection<Card> Cards { get; set; } = new List<Card>();
+    public ICollection<Column> Columns { get; set; } = new List<Column>();
 }

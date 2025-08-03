@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Kanban.API.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Kanban.API.Common;
 
 namespace Kanban.API.Data;
 
@@ -16,16 +17,6 @@ public class KanbanDbContext : IdentityDbContext<ApplicationUser, ApplicationRol
     {
         base.OnModelCreating(modelBuilder);
 
-        // Board configuration
-        modelBuilder.Entity<Board>(entity =>
-        {
-            entity.HasKey(e => e.Id);
-            entity.Property(e => e.Name).IsRequired().HasMaxLength(100);
-            entity.Property(e => e.Description).HasMaxLength(500);
-            entity.Property(e => e.CreatedAt).HasDefaultValueSql("NOW()");
-            entity.Property(e => e.UpdatedAt).HasDefaultValueSql("NOW()");
-        });
-
         modelBuilder.Entity<ApplicationRole>().HasData(
             new ApplicationRole
             {
@@ -40,5 +31,50 @@ public class KanbanDbContext : IdentityDbContext<ApplicationUser, ApplicationRol
                 NormalizedName = "USER"
             }
         );
+
+        modelBuilder.Entity<Board>(entity =>
+        {
+            // Primary key
+            entity.HasKey(e => e.Id);
+
+            // Name property configuration
+            entity.Property(e => e.Name)
+                .IsRequired()
+                .HasMaxLength(100);
+
+            // Description property configuration
+            entity.Property(e => e.Description)
+                .HasMaxLength(500);
+
+            // CreatedById property configuration
+            entity.Property(e => e.CreatedById)
+                .HasMaxLength(450);
+
+            entity.Property(e => e.CreatedAt)
+                .IsRequired()
+                .HasDefaultValueSql("NOW()");
+
+            entity.Property(e => e.UpdatedAt)
+                .IsRequired()
+                .HasDefaultValueSql("NOW()");
+
+            entity.HasOne(e => e.CreatedBy)
+                .WithMany()
+                .HasForeignKey(e => e.CreatedById)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            entity.ToTable("Boards");
+
+            entity.HasIndex(e => e.CreatedById)
+                .HasDatabaseName("IX_Boards_CreatedById");
+
+            entity.HasIndex(e => e.CreatedAt)
+                .HasDatabaseName("IX_Boards_CreatedAt");
+        });
+
+        modelBuilder.Entity<Models.Task>(entity =>
+        {
+            
+        });
     }
 }

@@ -6,17 +6,14 @@ public class Board
 {
     public Guid Id { get; set; }
     
-    [Required]
-    [MaxLength(100)]
     public string Name { get; set; } = string.Empty;
 
-    [MaxLength(500)]
     public string? Description { get; set; }
 
-    public string? CreatedById { get; set; } = null!;
+    public string? CreatedById { get; set; }
 
     public ApplicationUser? CreatedBy { get; set; }
     
-    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-    public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
+    public DateTime CreatedAt { get; set; }
+    public DateTime UpdatedAt { get; set; }
 }

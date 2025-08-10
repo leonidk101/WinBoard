@@ -5,15 +5,17 @@ namespace Kanban.API.Models;
 public class Board
 {
     public Guid Id { get; set; }
-    
+
     public string Name { get; set; } = string.Empty;
 
     public string? Description { get; set; }
 
-    public string? CreatedById { get; set; }
+    public ApplicationUser? CreatedByUser { get; set; }
 
-    public ApplicationUser? CreatedBy { get; set; }
-    
-    public DateTime CreatedAt { get; set; }
-    public DateTime UpdatedAt { get; set; }
+    public string? CreatedByUserId { get; set; }
+
+    public DateTimeOffset CreatedAt { get; set; }
+
+    [Timestamp]
+    public byte[] Version { get; set; } = default!;
 }

@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Kanban.API.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Kanban.API.Common;
+using Kanban.API.Data.Configurations;
 
 namespace Kanban.API.Data;
 
@@ -12,6 +12,14 @@ public class KanbanDbContext : IdentityDbContext<ApplicationUser, ApplicationRol
     }
     
     public DbSet<Board> Boards { get; set; } = null!;
+
+    // Precompiled query to get all boards for a specific user
+    public static readonly Func<KanbanDbContext, string, IAsyncEnumerable<Board>> GetBoardsByUserIdQuery =
+        EF.CompileAsyncQuery((KanbanDbContext context, string userId) =>
+            context.Boards
+                .Where(b => b.CreatedByUserId == userId)
+                .OrderByDescending(b => b.CreatedAt)
+                .AsNoTracking());
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -32,49 +40,10 @@ public class KanbanDbContext : IdentityDbContext<ApplicationUser, ApplicationRol
             }
         );
 
-        modelBuilder.Entity<Board>(entity =>
-        {
-            // Primary key
-            entity.HasKey(e => e.Id);
+        new BoardEntityTypeConfiguration().Configure(modelBuilder.Entity<Board>());
 
-            // Name property configuration
-            entity.Property(e => e.Name)
-                .IsRequired()
-                .HasMaxLength(100);
+        new BoardListEntityTypeConfiguration().Configure(modelBuilder.Entity<BoardList>());
 
-            // Description property configuration
-            entity.Property(e => e.Description)
-                .HasMaxLength(500);
-
-            // CreatedById property configuration
-            entity.Property(e => e.CreatedById)
-                .HasMaxLength(450);
-
-            entity.Property(e => e.CreatedAt)
-                .IsRequired()
-                .HasDefaultValueSql("NOW()");
-
-            entity.Property(e => e.UpdatedAt)
-                .IsRequired()
-                .HasDefaultValueSql("NOW()");
-
-            entity.HasOne(e => e.CreatedBy)
-                .WithMany()
-                .HasForeignKey(e => e.CreatedById)
-                .OnDelete(DeleteBehavior.SetNull);
-
-            entity.ToTable("Boards");
-
-            entity.HasIndex(e => e.CreatedById)
-                .HasDatabaseName("IX_Boards_CreatedById");
-
-            entity.HasIndex(e => e.CreatedAt)
-                .HasDatabaseName("IX_Boards_CreatedAt");
-        });
-
-        modelBuilder.Entity<Models.Task>(entity =>
-        {
-            
-        });
+        new TaskEntityTypeConfiguration().Configure(modelBuilder.Entity<TaskItem>());
     }
 }

@@ -9,5 +9,11 @@ public static class BoardQueries
 {
     public static readonly Func<KanbanDbContext, Guid, CancellationToken, Task<Board?>> GetById =
         CompileAsyncQuery<KanbanDbContext, Guid, Board?>((db, id, ct) =>
-            db.Set<Board>().AsNoTracking().FirstOrDefault(e => e.Id == id));
+            db.Boards.AsNoTracking().FirstOrDefault(e => e.Id == id)
+        );
+
+    public static readonly Func<KanbanDbContext, string, IAsyncEnumerable<Board>> GetAllForUser =
+        CompileAsyncQuery((KanbanDbContext db, string userId) => 
+            db.Boards.AsNoTracking().Where(b => b.CreatedByUserId == userId)
+        );
 }

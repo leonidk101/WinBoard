@@ -12,10 +12,10 @@ public class Board
 
     public ApplicationUser? CreatedByUser { get; set; }
 
-    public string? CreatedByUserId { get; set; }
+    public required string CreatedByUserId { get; set; }
 
     public DateTimeOffset CreatedAt { get; set; }
 
     [Timestamp]
-    public byte[] Version { get; set; } = default!;
+    public uint Version { get; set; }
 }

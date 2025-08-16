@@ -16,7 +16,7 @@ public class BoardEntityTypeConfiguration : IEntityTypeConfiguration<Board>
 
         builder.Property(x => x.CreatedAt)
             .HasColumnType("timestamptz")
-            .HasDefaultValue("now()");
+            .HasDefaultValueSql("now()");
 
         builder.Property(x => x.CreatedByUserId)
             .IsRequired()

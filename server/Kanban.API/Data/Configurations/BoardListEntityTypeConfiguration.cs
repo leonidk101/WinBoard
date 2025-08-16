@@ -19,7 +19,7 @@ namespace Kanban.API.Data.Configurations
 
             builder.Property(x => x.CreatedAt)
                 .HasColumnType("timestamptz")
-                .HasDefaultValue("now()");
+                .HasDefaultValueSql("now()");
 
             builder.Property(x => x.CreatedByUserId)
                 .IsRequired()

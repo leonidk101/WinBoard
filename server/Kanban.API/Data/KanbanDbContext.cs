@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Kanban.API.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Kanban.API.Data.Configurations;
 
 namespace Kanban.API.Data;
 
@@ -12,19 +13,17 @@ public class KanbanDbContext : IdentityDbContext<ApplicationUser, ApplicationRol
     
     public DbSet<Board> Boards { get; set; } = null!;
 
+    // Precompiled query to get all boards for a specific user
+    public static readonly Func<KanbanDbContext, string, IAsyncEnumerable<Board>> GetBoardsByUserIdQuery =
+        EF.CompileAsyncQuery((KanbanDbContext context, string userId) =>
+            context.Boards
+                .Where(b => b.CreatedByUserId == userId)
+                .OrderByDescending(b => b.CreatedAt)
+                .AsNoTracking());
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-
-        // Board configuration
-        modelBuilder.Entity<Board>(entity =>
-        {
-            entity.HasKey(e => e.Id);
-            entity.Property(e => e.Name).IsRequired().HasMaxLength(100);
-            entity.Property(e => e.Description).HasMaxLength(500);
-            entity.Property(e => e.CreatedAt).HasDefaultValueSql("NOW()");
-            entity.Property(e => e.UpdatedAt).HasDefaultValueSql("NOW()");
-        });
 
         modelBuilder.Entity<ApplicationRole>().HasData(
             new ApplicationRole
@@ -40,5 +39,11 @@ public class KanbanDbContext : IdentityDbContext<ApplicationUser, ApplicationRol
                 NormalizedName = "USER"
             }
         );
+
+        new BoardEntityTypeConfiguration().Configure(modelBuilder.Entity<Board>());
+
+        new BoardListEntityTypeConfiguration().Configure(modelBuilder.Entity<BoardList>());
+
+        new TaskEntityTypeConfiguration().Configure(modelBuilder.Entity<TaskItem>());
     }
 }

@@ -165,19 +165,73 @@ namespace Kanban.API.Migrations
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    Description = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
-                    CreatedById = table.Column<string>(type: "text", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "NOW()"),
-                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "NOW()")
+                    Description = table.Column<string>(type: "text", nullable: true),
+                    CreatedByUserId = table.Column<string>(type: "character varying(450)", maxLength: 450, nullable: false),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "timestamptz", nullable: false, defaultValueSql: "now()"),
+                    xmin = table.Column<uint>(type: "xid", rowVersion: true, nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Boards", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Boards_AspNetUsers_CreatedById",
-                        column: x => x.CreatedById,
+                        name: "FK_Boards_AspNetUsers_CreatedByUserId",
+                        column: x => x.CreatedByUserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "BoardList",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    BoardId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Title = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    Order = table.Column<int>(type: "integer", nullable: false),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "timestamptz", nullable: false, defaultValueSql: "now()"),
+                    CreatedByUserId = table.Column<string>(type: "character varying(450)", maxLength: 450, nullable: false),
+                    xmin = table.Column<uint>(type: "xid", rowVersion: true, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BoardList", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BoardList_AspNetUsers_CreatedByUserId",
+                        column: x => x.CreatedByUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_BoardList_Boards_BoardId",
+                        column: x => x.BoardId,
+                        principalTable: "Boards",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Tasks",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    BoardListId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Title = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
+                    Description = table.Column<string>(type: "character varying(4000)", maxLength: 4000, nullable: true),
+                    Order = table.Column<int>(type: "integer", nullable: false),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "timestamptz", nullable: false, defaultValueSql: "now()"),
+                    CreatedByUserId = table.Column<string>(type: "character varying(450)", maxLength: 450, nullable: false),
+                    xmin = table.Column<uint>(type: "xid", rowVersion: true, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tasks", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Tasks_BoardList_BoardListId",
+                        column: x => x.BoardListId,
+                        principalTable: "BoardList",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
@@ -227,9 +281,36 @@ namespace Kanban.API.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Boards_CreatedById",
+                name: "IX_BoardList_BoardId_Order",
+                table: "BoardList",
+                columns: new[] { "BoardId", "Order" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BoardList_CreatedByUserId",
+                table: "BoardList",
+                column: "CreatedByUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Boards_CreatedByUserId",
                 table: "Boards",
-                column: "CreatedById");
+                column: "CreatedByUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Boards_Name",
+                table: "Boards",
+                column: "Name");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tasks_BoardListId",
+                table: "Tasks",
+                column: "BoardListId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tasks_BoardListId_Order",
+                table: "Tasks",
+                columns: new[] { "BoardListId", "Order" },
+                unique: true);
         }
 
         /// <inheritdoc />
@@ -251,10 +332,16 @@ namespace Kanban.API.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Boards");
+                name: "Tasks");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "BoardList");
+
+            migrationBuilder.DropTable(
+                name: "Boards");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

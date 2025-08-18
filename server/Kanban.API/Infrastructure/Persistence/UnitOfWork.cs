@@ -1,7 +1,8 @@
+using Kanban.API.Common;
 using Kanban.API.Data;
 using Microsoft.EntityFrameworkCore.Storage;
 
-namespace Kanban.API.Common;
+namespace Kanban.API.Infrastructure.Persistence;
 
 public class UnitOfWork(KanbanDbContext db) : IUnitOfWork
 {

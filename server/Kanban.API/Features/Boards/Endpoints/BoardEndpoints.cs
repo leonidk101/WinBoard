@@ -1,74 +1,17 @@
-using System.Security.Claims;
-using Kanban.API.Common;
-using Kanban.API.Features.Boards.Repositories;
-using Kanban.API.Features.Boards.Services;
-using Kanban.API.Models;
-using Microsoft.AspNetCore.Http.HttpResults;
-
 namespace Kanban.API.Features.Boards.Endpoints;
 
-public static class BoardEndpoints
+internal static partial class BoardEndpoints
 {
     public static IEndpointRouteBuilder MapBoardEndpoints(this IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("/boards")
             .RequireAuthorization();
 
-        group.MapGet("/", async Task<Results<
-                Ok<List<Board>>,
-                NotFound<string>
-            >>
-            (IBoardsRepository repository, ClaimsPrincipal user, CancellationToken ct) =>
-        {
-            var userId = user.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            if (userId == null)
-            {
-                return TypedResults.NotFound("User not found");
-            }
-            
-            var boards = await repository.GetAllForUserAsync(userId, ct);
+        group.MapGet("/", GetAllForTheCurrentUser);
 
-            return TypedResults.Ok(boards);
-        });
+        group.MapGet("/{id:guid}", GetById);
 
-        group.MapGet("/{id:guid}", async Task<Results<
-                Ok<Board>, 
-                NotFound
-            >>
-            (Guid id, IBoardsService boardsService, CancellationToken ct) =>
-        {
-            var board = await boardsService.GetByIdAsync(id, ct);
-            
-            return board == null ? TypedResults.NotFound() : TypedResults.Ok(board);
-        });
-
-        group.MapPost("/", async Task<Results<
-                Created<Guid>, 
-                NotFound<string>
-            >>
-            (CreateBoardRequest req, IBoardsRepository repository, IUnitOfWork uow, ClaimsPrincipal user, CancellationToken ct) =>
-        {
-            var userId = user.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            if (userId == null)
-            {
-                return TypedResults.NotFound("User not found");
-            }
-            
-            var board = new Board
-            {
-                Id = Guid.NewGuid(),
-                Name = req.Name,
-                Description = req.Description,
-                CreatedByUserId = userId,
-            };
-            
-            await repository.AddAsync(board, ct);
-            await uow.SaveChangesAsync(ct);
-            
-            return TypedResults.Created($"/boards/{board.Id}", board.Id);
-        });
+        group.MapPost("/", CreateBoardForUser);
         return app;
     }
-    
-    public sealed record CreateBoardRequest(string Name, string Description);
 }

@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore.Storage;
 
-namespace Kanban.API.Common;
+namespace Kanban.API.Infrastructure.Persistence;
 
 public interface IUnitOfWork
 {

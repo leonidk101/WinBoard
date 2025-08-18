@@ -2,7 +2,7 @@ using Kanban.API.Models;
 
 namespace Kanban.API.Features.Boards.Repositories;
 
-public interface IBoardRepository
+public interface IBoardsRepository
 {
     Task<Board?> GetByIdAsync(Guid id, CancellationToken ct = default);
 

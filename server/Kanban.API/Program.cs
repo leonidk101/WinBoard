@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Kanban.API.Data;
-using Kanban.API.Features.Endpoints;
+using Kanban.API.Features.Boards;
+using Kanban.API.Features.Boards.Endpoints;
 using Kanban.API.Infrastructure.Persistence;
 using Kanban.API.Models;
 using Microsoft.AspNetCore.Identity;
@@ -40,7 +41,9 @@ builder.Services.AddSwaggerGen(options =>
 builder.Services.AddDbContext<KanbanDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddRepositories();
+builder.Services
+    .AddInfrastructure()
+    .AddBoardsApi();
 
 builder.Services
     .AddIdentityApiEndpoints<ApplicationUser>(options =>
@@ -94,8 +97,3 @@ app.UseHttpsRedirection();
 app.MapBoardEndpoints();
 
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Kanban.API.Features.Boards.Repositories;
 
-public class BoardRepository(KanbanDbContext db) : IBoardRepository
+public class BoardsRepository(KanbanDbContext db) : IBoardsRepository
 {
     public Task<Board?> GetByIdAsync(Guid id, CancellationToken ct = default)
     {

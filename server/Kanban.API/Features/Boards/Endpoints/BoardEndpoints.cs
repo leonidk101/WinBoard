@@ -1,10 +1,11 @@
 using System.Security.Claims;
 using Kanban.API.Common;
 using Kanban.API.Features.Boards.Repositories;
+using Kanban.API.Features.Boards.Services;
 using Kanban.API.Models;
 using Microsoft.AspNetCore.Http.HttpResults;
 
-namespace Kanban.API.Features.Endpoints;
+namespace Kanban.API.Features.Boards.Endpoints;
 
 public static class BoardEndpoints
 {
@@ -17,7 +18,7 @@ public static class BoardEndpoints
                 Ok<List<Board>>,
                 NotFound<string>
             >>
-            (IBoardRepository repository, ClaimsPrincipal user, CancellationToken ct) =>
+            (IBoardsRepository repository, ClaimsPrincipal user, CancellationToken ct) =>
         {
             var userId = user.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             if (userId == null)
@@ -30,11 +31,14 @@ public static class BoardEndpoints
             return TypedResults.Ok(boards);
         });
 
-        group.MapGet("/{id:guid}", async Task<Results<Ok<Board>, NotFound>>
-            (Guid id, IBoardRepository repository, CancellationToken ct) =>
+        group.MapGet("/{id:guid}", async Task<Results<
+                Ok<Board>, 
+                NotFound
+            >>
+            (Guid id, IBoardsService boardsService, CancellationToken ct) =>
         {
-            var board = await repository.GetByIdAsync(id, ct);
-
+            var board = await boardsService.GetByIdAsync(id, ct);
+            
             return board == null ? TypedResults.NotFound() : TypedResults.Ok(board);
         });
 
@@ -42,7 +46,7 @@ public static class BoardEndpoints
                 Created<Guid>, 
                 NotFound<string>
             >>
-            (CreateBoardRequest req, IBoardRepository repository, IUnitOfWork uow, ClaimsPrincipal user, CancellationToken ct) =>
+            (CreateBoardRequest req, IBoardsRepository repository, IUnitOfWork uow, ClaimsPrincipal user, CancellationToken ct) =>
         {
             var userId = user.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             if (userId == null)

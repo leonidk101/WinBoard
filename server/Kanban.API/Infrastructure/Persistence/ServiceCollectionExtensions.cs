@@ -1,15 +1,12 @@
 using Kanban.API.Common;
-using Kanban.API.Features.Boards.Repositories;
 
 namespace Kanban.API.Infrastructure.Persistence;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddRepositories(this IServiceCollection services)
+    public static IServiceCollection AddInfrastructure(this IServiceCollection services)
     {
         services.AddScoped<IUnitOfWork, UnitOfWork>();
-        
-        services.AddScoped<IBoardRepository, BoardRepository>();
         
         return services;
     }

@@ -21,8 +21,4 @@
     <PackageReference Include="Swashbuckle.AspNetCore.ReDoc" Version="9.0.3" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Features\Boards\" />
-  </ItemGroup>
-
 </Project>

@@ -22,7 +22,7 @@ public class BoardsRepository(KanbanDbContext db) : IBoardsRepository
     public Task AddAsync(Board board, CancellationToken ct = default)
     {
         db.Boards.Add(board);
-        
-        return Task.CompletedTask;
+
+        return db.SaveChangesAsync(ct);
     }
 }

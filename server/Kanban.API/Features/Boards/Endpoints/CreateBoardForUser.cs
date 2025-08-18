@@ -1,9 +1,7 @@
 ﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Http.HttpResults;
-using Kanban.API.Common;
 using Kanban.API.Features.Boards.Models;
 using Kanban.API.Features.Boards.Repositories;
-using Kanban.API.Infrastructure.Persistence;
 using Kanban.API.Models;
 
 namespace Kanban.API.Features.Boards.Endpoints;
@@ -13,8 +11,7 @@ internal static partial class BoardEndpoints
     private static async Task<Results<Created<Guid>, NotFound<string>>>
         CreateBoardForUser(
             CreateBoardDto req, 
-            IBoardsRepository repository, 
-            IUnitOfWork uow, 
+            IBoardsRepository repository,
             ClaimsPrincipal user, 
             CancellationToken ct)
     {
@@ -33,7 +30,6 @@ internal static partial class BoardEndpoints
         };
             
         await repository.AddAsync(board, ct);
-        await uow.SaveChangesAsync(ct);
             
         return TypedResults.Created($"/boards/{board.Id}", board.Id);
     }

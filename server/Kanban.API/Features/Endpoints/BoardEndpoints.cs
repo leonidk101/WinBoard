@@ -1,11 +1,10 @@
+using System.Security.Claims;
 using Kanban.API.Common;
-using Kanban.API.Infrastructure.Persistence.Repositories;
+using Kanban.API.Features.Boards.Repositories;
 using Kanban.API.Models;
 using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Authorization;
-using System.Security.Claims;
 
-namespace Kanban.API.Endpoints;
+namespace Kanban.API.Features.Endpoints;
 
 public static class BoardEndpoints
 {

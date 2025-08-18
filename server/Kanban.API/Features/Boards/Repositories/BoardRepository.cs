@@ -1,9 +1,9 @@
 using Kanban.API.Data;
-using Kanban.API.Infrastructure.Persistence.Queries;
+using Kanban.API.Features.Boards.Queries;
 using Kanban.API.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kanban.API.Infrastructure.Persistence.Repositories;
+namespace Kanban.API.Features.Boards.Repositories;
 
 public class BoardRepository(KanbanDbContext db) : IBoardRepository
 {

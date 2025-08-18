@@ -1,8 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Kanban.API.Data;
-using Kanban.API.Endpoints;
+using Kanban.API.Features.Endpoints;
 using Kanban.API.Infrastructure.Persistence;
-using Kanban.API.Infrastructure.Persistence.Repositories;
 using Kanban.API.Models;
 using Microsoft.AspNetCore.Identity;
 

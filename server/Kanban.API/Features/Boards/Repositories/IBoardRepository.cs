@@ -1,6 +1,6 @@
 using Kanban.API.Models;
 
-namespace Kanban.API.Infrastructure.Persistence.Repositories;
+namespace Kanban.API.Features.Boards.Repositories;
 
 public interface IBoardRepository
 {

@@ -1,5 +1,5 @@
 using Kanban.API.Common;
-using Kanban.API.Infrastructure.Persistence.Repositories;
+using Kanban.API.Features.Boards.Repositories;
 
 namespace Kanban.API.Infrastructure.Persistence;
 

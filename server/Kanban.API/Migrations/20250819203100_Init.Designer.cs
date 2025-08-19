@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Kanban.API.Migrations
 {
     [DbContext(typeof(KanbanDbContext))]
-    [Migration("20250816222147_Init")]
+    [Migration("20250819203100_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -208,7 +208,7 @@ namespace Kanban.API.Migrations
                     b.HasIndex("BoardId", "Order")
                         .IsUnique();
 
-                    b.ToTable("BoardList");
+                    b.ToTable("BoardLists", (string)null);
                 });
 
             modelBuilder.Entity("Kanban.API.Models.TaskItem", b =>

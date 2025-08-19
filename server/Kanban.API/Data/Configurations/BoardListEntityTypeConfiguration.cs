@@ -9,6 +9,8 @@ namespace Kanban.API.Data.Configurations
         public void Configure(EntityTypeBuilder<BoardList> builder)
         {
             builder.HasKey(x => x.Id);
+            
+            builder.ToTable("BoardLists");
 
             builder.Property(x => x.Title)
                 .IsRequired()

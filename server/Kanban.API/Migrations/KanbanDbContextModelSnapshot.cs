@@ -205,7 +205,7 @@ namespace Kanban.API.Migrations
                     b.HasIndex("BoardId", "Order")
                         .IsUnique();
 
-                    b.ToTable("BoardList");
+                    b.ToTable("BoardLists", (string)null);
                 });
 
             modelBuilder.Entity("Kanban.API.Models.TaskItem", b =>

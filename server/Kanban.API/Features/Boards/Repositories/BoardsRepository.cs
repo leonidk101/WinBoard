@@ -1,11 +1,11 @@
 using Kanban.API.Data;
-using Kanban.API.Infrastructure.Persistence.Queries;
+using Kanban.API.Features.Boards.Queries;
 using Kanban.API.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kanban.API.Infrastructure.Persistence.Repositories;
+namespace Kanban.API.Features.Boards.Repositories;
 
-public class BoardRepository(KanbanDbContext db) : IBoardRepository
+public class BoardsRepository(KanbanDbContext db) : IBoardsRepository
 {
     public Task<Board?> GetByIdAsync(Guid id, CancellationToken ct = default)
     {
@@ -22,7 +22,14 @@ public class BoardRepository(KanbanDbContext db) : IBoardRepository
     public Task AddAsync(Board board, CancellationToken ct = default)
     {
         db.Boards.Add(board);
-        
-        return Task.CompletedTask;
+
+        return db.SaveChangesAsync(ct);
+    }
+
+    public Task UpdateAsync(Board board, CancellationToken ct = default)
+    {
+        db.Boards.Update(board);
+
+        return db.SaveChangesAsync(ct);
     }
 }

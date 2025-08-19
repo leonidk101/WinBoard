@@ -1,10 +1,11 @@
 using Microsoft.EntityFrameworkCore;
-using Kanban.API.Data;
-using Kanban.API.Endpoints;
-using Kanban.API.Infrastructure.Persistence;
-using Kanban.API.Infrastructure.Persistence.Repositories;
-using Kanban.API.Models;
 using Microsoft.AspNetCore.Identity;
+using Kanban.API.Data;
+using Kanban.API.Features.BoardLists;
+using Kanban.API.Features.BoardLists.Endpoints;
+using Kanban.API.Features.Boards;
+using Kanban.API.Features.Boards.Endpoints;
+using Kanban.API.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,7 +20,7 @@ builder.Services.AddSwaggerGen(options =>
         Scheme = "Bearer",
         BearerFormat = "JWT",
         In = Microsoft.OpenApi.Models.ParameterLocation.Header,
-        Description = "Enter Bearer [space] and then your valid token"
+        Description = "Enter a valid token"
     });
     
     options.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
@@ -41,7 +42,9 @@ builder.Services.AddSwaggerGen(options =>
 builder.Services.AddDbContext<KanbanDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddRepositories();
+builder.Services
+    .AddBoardsApi()
+    .AddBoardListsApi();
 
 builder.Services
     .AddIdentityApiEndpoints<ApplicationUser>(options =>
@@ -92,11 +95,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapBoardEndpoints();
+app
+    .MapBoardEndpoints()
+    .MapBoardListEndpoints();
 
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}

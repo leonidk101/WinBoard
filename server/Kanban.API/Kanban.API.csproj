@@ -8,6 +8,7 @@
     <NoWarn>$(NoWarn);1591</NoWarn>
     <RootNamespace>Kanban.API</RootNamespace>
     <AssemblyName>Kanban.API</AssemblyName>
+    <LangVersion>13</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>

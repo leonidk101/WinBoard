@@ -182,7 +182,7 @@ namespace Kanban.API.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "BoardList",
+                name: "BoardLists",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -195,15 +195,15 @@ namespace Kanban.API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BoardList", x => x.Id);
+                    table.PrimaryKey("PK_BoardLists", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_BoardList_AspNetUsers_CreatedByUserId",
+                        name: "FK_BoardLists_AspNetUsers_CreatedByUserId",
                         column: x => x.CreatedByUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_BoardList_Boards_BoardId",
+                        name: "FK_BoardLists_Boards_BoardId",
                         column: x => x.BoardId,
                         principalTable: "Boards",
                         principalColumn: "Id",
@@ -227,9 +227,9 @@ namespace Kanban.API.Migrations
                 {
                     table.PrimaryKey("PK_Tasks", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Tasks_BoardList_BoardListId",
+                        name: "FK_Tasks_BoardLists_BoardListId",
                         column: x => x.BoardListId,
-                        principalTable: "BoardList",
+                        principalTable: "BoardLists",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -281,14 +281,14 @@ namespace Kanban.API.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_BoardList_BoardId_Order",
-                table: "BoardList",
+                name: "IX_BoardLists_BoardId_Order",
+                table: "BoardLists",
                 columns: new[] { "BoardId", "Order" },
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_BoardList_CreatedByUserId",
-                table: "BoardList",
+                name: "IX_BoardLists_CreatedByUserId",
+                table: "BoardLists",
                 column: "CreatedByUserId");
 
             migrationBuilder.CreateIndex(
@@ -338,7 +338,7 @@ namespace Kanban.API.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "BoardList");
+                name: "BoardLists");
 
             migrationBuilder.DropTable(
                 name: "Boards");

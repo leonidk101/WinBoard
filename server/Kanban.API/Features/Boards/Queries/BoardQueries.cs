@@ -3,7 +3,7 @@ using Kanban.API.Models;
 using Microsoft.EntityFrameworkCore;
 using static Microsoft.EntityFrameworkCore.EF;
 
-namespace Kanban.API.Infrastructure.Persistence.Queries;
+namespace Kanban.API.Features.Boards.Queries;
 
 public static class BoardQueries
 {

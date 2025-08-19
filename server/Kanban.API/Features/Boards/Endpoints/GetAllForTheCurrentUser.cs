@@ -7,7 +7,7 @@ namespace Kanban.API.Features.Boards.Endpoints;
 
 internal static partial class BoardEndpoints
 {
-    private static async Task<Results< Ok<List<Board>>, NotFound<string> >> 
+    public static async Task<Results< Ok<List<Board>>, NotFound<string> >> 
         GetAllForTheCurrentUser(IBoardsRepository repository, ClaimsPrincipal user, CancellationToken ct)
     {
         var userId = user.FindFirst(ClaimTypes.NameIdentifier)?.Value;

@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Kanban.API.Data;
+using Kanban.API.Features.BoardLists;
+using Kanban.API.Features.BoardLists.Endpoints;
 using Kanban.API.Features.Boards;
 using Kanban.API.Features.Boards.Endpoints;
 using Kanban.API.Models;
@@ -41,7 +43,8 @@ builder.Services.AddDbContext<KanbanDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services
-    .AddBoardsApi();
+    .AddBoardsApi()
+    .AddBoardListsApi();
 
 builder.Services
     .AddIdentityApiEndpoints<ApplicationUser>(options =>
@@ -92,6 +95,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapBoardEndpoints();
+app
+    .MapBoardEndpoints()
+    .MapBoardListEndpoints();
 
 app.Run();

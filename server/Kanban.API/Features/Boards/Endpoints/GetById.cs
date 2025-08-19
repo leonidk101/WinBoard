@@ -6,7 +6,7 @@ namespace Kanban.API.Features.Boards.Endpoints;
 
 internal static partial class BoardEndpoints
 {
-    private static async Task<Results< Ok<Board>, NotFound>> 
+    public static async Task<Results< Ok<Board>, NotFound>> 
         GetById(Guid id, IBoardsRepository boardsService, CancellationToken ct)
     {
         var board = await boardsService.GetByIdAsync(id, ct);

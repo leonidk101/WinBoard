@@ -9,4 +9,6 @@ public interface IBoardsRepository
     Task<List<Board>> GetAllForUserAsync(string userId, CancellationToken ct = default);
 
     Task AddAsync(Board board, CancellationToken ct = default);
+
+    Task UpdateAsync(Board board, CancellationToken ct = default);
 }

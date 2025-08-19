@@ -25,4 +25,11 @@ public class BoardsRepository(KanbanDbContext db) : IBoardsRepository
 
         return db.SaveChangesAsync(ct);
     }
+
+    public Task UpdateAsync(Board board, CancellationToken ct = default)
+    {
+        db.Boards.Update(board);
+
+        return db.SaveChangesAsync(ct);
+    }
 }

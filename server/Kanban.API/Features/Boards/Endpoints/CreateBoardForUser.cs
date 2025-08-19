@@ -8,7 +8,7 @@ namespace Kanban.API.Features.Boards.Endpoints;
 
 internal static partial class BoardEndpoints
 {
-    private static async Task<Results<Created<Guid>, NotFound<string>>>
+    public static async Task<Results<Created<Guid>, NotFound<string>>>
         CreateBoardForUser(
             CreateBoardDto req, 
             IBoardsRepository repository,

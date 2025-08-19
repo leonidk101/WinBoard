@@ -12,6 +12,7 @@ internal static partial class BoardEndpoints
         group.MapGet("/{id:guid}", GetById);
 
         group.MapPost("/", CreateBoardForUser);
+        
         return app;
     }
 }

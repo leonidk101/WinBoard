@@ -252,7 +252,7 @@ namespace Kanban.API.Migrations
                     b.HasIndex("BoardListId", "Order")
                         .IsUnique();
 
-                    b.ToTable("Tasks", (string)null);
+                    b.ToTable("TaskItems", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

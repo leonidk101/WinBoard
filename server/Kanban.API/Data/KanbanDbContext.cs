@@ -14,6 +14,8 @@ public class KanbanDbContext : IdentityDbContext<ApplicationUser, ApplicationRol
     public DbSet<Board> Boards { get; set; } = null!;
     
     public DbSet<BoardList> BoardLists { get; set; } = null!;
+    
+    public DbSet<TaskItem> TaskItems { get; set; } = null!;
 
     // Precompiled query to get all boards for a specific user
     public static readonly Func<KanbanDbContext, string, IAsyncEnumerable<Board>> GetBoardsByUserIdQuery =

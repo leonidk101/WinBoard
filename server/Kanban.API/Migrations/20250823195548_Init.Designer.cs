@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Kanban.API.Migrations
 {
     [DbContext(typeof(KanbanDbContext))]
-    [Migration("20250819203100_Init")]
+    [Migration("20250823195548_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -255,7 +255,7 @@ namespace Kanban.API.Migrations
                     b.HasIndex("BoardListId", "Order")
                         .IsUnique();
 
-                    b.ToTable("Tasks", (string)null);
+                    b.ToTable("TaskItems", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Kanban.API.Migrations
 {
     [DbContext(typeof(KanbanDbContext))]
-    [Migration("20250823195548_Init")]
+    [Migration("20250927233311_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -186,6 +186,9 @@ namespace Kanban.API.Migrations
                         .IsRequired()
                         .HasMaxLength(450)
                         .HasColumnType("character varying(450)");
+
+                    b.Property<int>("LastTaskOrder")
+                        .HasColumnType("integer");
 
                     b.Property<int>("Order")
                         .HasColumnType("integer");

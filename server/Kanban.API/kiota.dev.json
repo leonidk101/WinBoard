@@ -1,0 +1,14 @@
+{
+  "$schema": "https://raw.githubusercontent.com/microsoft/kiota/main/vscode/kiota-config.schema.json",
+  "descriptionLocation": "https://api.example.com/swagger/v1/swagger.json",
+  "language": "csharp",
+  "outputPath": "src/MyApi.Client",
+  "className": "MyApiClient",
+  "namespaceName": "MyCompany.MyApi",
+  "clientClassInternal": false,
+  "structuredMimeTypes": ["application/json"],
+  "excludeBackwardCompatible": true,
+  "includeAdditionalData": false,
+  "useBackingStore": false,
+  "singleRequestParameter": true
+}

@@ -6,7 +6,7 @@ using Microsoft.Kiota.Abstractions;
 using System.Collections.Generic;
 using System.IO;
 using System;
-namespace ApiSdk.Models
+namespace Kanban.API.Client.Models
 {
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
     #pragma warning disable CS1591
@@ -26,10 +26,10 @@ namespace ApiSdk.Models
         /// <summary>The errors property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
-        public global::ApiSdk.Models.HttpValidationProblemDetails_errors? Errors { get; set; }
+        public global::Kanban.API.Client.Models.HttpValidationProblemDetails_errors? Errors { get; set; }
 #nullable restore
 #else
-        public global::ApiSdk.Models.HttpValidationProblemDetails_errors Errors { get; set; }
+        public global::Kanban.API.Client.Models.HttpValidationProblemDetails_errors Errors { get; set; }
 #endif
         /// <summary>The instance property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
@@ -60,7 +60,7 @@ namespace ApiSdk.Models
         public string Type { get; set; }
 #endif
         /// <summary>
-        /// Instantiates a new <see cref="global::ApiSdk.Models.HttpValidationProblemDetails"/> and sets the default values.
+        /// Instantiates a new <see cref="global::Kanban.API.Client.Models.HttpValidationProblemDetails"/> and sets the default values.
         /// </summary>
         public HttpValidationProblemDetails()
         {
@@ -69,12 +69,12 @@ namespace ApiSdk.Models
         /// <summary>
         /// Creates a new instance of the appropriate class based on discriminator value
         /// </summary>
-        /// <returns>A <see cref="global::ApiSdk.Models.HttpValidationProblemDetails"/></returns>
+        /// <returns>A <see cref="global::Kanban.API.Client.Models.HttpValidationProblemDetails"/></returns>
         /// <param name="parseNode">The parse node to use to read the discriminator value and create the object</param>
-        public static global::ApiSdk.Models.HttpValidationProblemDetails CreateFromDiscriminatorValue(IParseNode parseNode)
+        public static global::Kanban.API.Client.Models.HttpValidationProblemDetails CreateFromDiscriminatorValue(IParseNode parseNode)
         {
             _ = parseNode ?? throw new ArgumentNullException(nameof(parseNode));
-            return new global::ApiSdk.Models.HttpValidationProblemDetails();
+            return new global::Kanban.API.Client.Models.HttpValidationProblemDetails();
         }
         /// <summary>
         /// The deserialization information for the current model
@@ -85,7 +85,7 @@ namespace ApiSdk.Models
             return new Dictionary<string, Action<IParseNode>>
             {
                 { "detail", n => { Detail = n.GetStringValue(); } },
-                { "errors", n => { Errors = n.GetObjectValue<global::ApiSdk.Models.HttpValidationProblemDetails_errors>(global::ApiSdk.Models.HttpValidationProblemDetails_errors.CreateFromDiscriminatorValue); } },
+                { "errors", n => { Errors = n.GetObjectValue<global::Kanban.API.Client.Models.HttpValidationProblemDetails_errors>(global::Kanban.API.Client.Models.HttpValidationProblemDetails_errors.CreateFromDiscriminatorValue); } },
                 { "instance", n => { Instance = n.GetStringValue(); } },
                 { "status", n => { Status = n.GetIntValue(); } },
                 { "title", n => { Title = n.GetStringValue(); } },
@@ -100,7 +100,7 @@ namespace ApiSdk.Models
         {
             _ = writer ?? throw new ArgumentNullException(nameof(writer));
             writer.WriteStringValue("detail", Detail);
-            writer.WriteObjectValue<global::ApiSdk.Models.HttpValidationProblemDetails_errors>("errors", Errors);
+            writer.WriteObjectValue<global::Kanban.API.Client.Models.HttpValidationProblemDetails_errors>("errors", Errors);
             writer.WriteStringValue("instance", Instance);
             writer.WriteIntValue("status", Status);
             writer.WriteStringValue("title", Title);

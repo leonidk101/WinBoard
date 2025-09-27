@@ -6,4 +6,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Kanban.API.Client\Kanban.API.Client.csproj" />
+  </ItemGroup>
+
 </Project>

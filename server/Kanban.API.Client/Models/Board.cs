@@ -5,7 +5,7 @@ using Microsoft.Kiota.Abstractions.Serialization;
 using System.Collections.Generic;
 using System.IO;
 using System;
-namespace ApiSdk.Models
+namespace Kanban.API.Client.Models
 {
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
     #pragma warning disable CS1591
@@ -17,10 +17,10 @@ namespace ApiSdk.Models
         /// <summary>The createdByUser property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
-        public global::ApiSdk.Models.ApplicationUser? CreatedByUser { get; set; }
+        public global::Kanban.API.Client.Models.ApplicationUser? CreatedByUser { get; set; }
 #nullable restore
 #else
-        public global::ApiSdk.Models.ApplicationUser CreatedByUser { get; set; }
+        public global::Kanban.API.Client.Models.ApplicationUser CreatedByUser { get; set; }
 #endif
         /// <summary>The createdByUserId property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
@@ -53,12 +53,12 @@ namespace ApiSdk.Models
         /// <summary>
         /// Creates a new instance of the appropriate class based on discriminator value
         /// </summary>
-        /// <returns>A <see cref="global::ApiSdk.Models.Board"/></returns>
+        /// <returns>A <see cref="global::Kanban.API.Client.Models.Board"/></returns>
         /// <param name="parseNode">The parse node to use to read the discriminator value and create the object</param>
-        public static global::ApiSdk.Models.Board CreateFromDiscriminatorValue(IParseNode parseNode)
+        public static global::Kanban.API.Client.Models.Board CreateFromDiscriminatorValue(IParseNode parseNode)
         {
             _ = parseNode ?? throw new ArgumentNullException(nameof(parseNode));
-            return new global::ApiSdk.Models.Board();
+            return new global::Kanban.API.Client.Models.Board();
         }
         /// <summary>
         /// The deserialization information for the current model
@@ -69,7 +69,7 @@ namespace ApiSdk.Models
             return new Dictionary<string, Action<IParseNode>>
             {
                 { "createdAt", n => { CreatedAt = n.GetDateTimeOffsetValue(); } },
-                { "createdByUser", n => { CreatedByUser = n.GetObjectValue<global::ApiSdk.Models.ApplicationUser>(global::ApiSdk.Models.ApplicationUser.CreateFromDiscriminatorValue); } },
+                { "createdByUser", n => { CreatedByUser = n.GetObjectValue<global::Kanban.API.Client.Models.ApplicationUser>(global::Kanban.API.Client.Models.ApplicationUser.CreateFromDiscriminatorValue); } },
                 { "createdByUserId", n => { CreatedByUserId = n.GetStringValue(); } },
                 { "description", n => { Description = n.GetStringValue(); } },
                 { "id", n => { Id = n.GetGuidValue(); } },
@@ -85,7 +85,7 @@ namespace ApiSdk.Models
         {
             _ = writer ?? throw new ArgumentNullException(nameof(writer));
             writer.WriteDateTimeOffsetValue("createdAt", CreatedAt);
-            writer.WriteObjectValue<global::ApiSdk.Models.ApplicationUser>("createdByUser", CreatedByUser);
+            writer.WriteObjectValue<global::Kanban.API.Client.Models.ApplicationUser>("createdByUser", CreatedByUser);
             writer.WriteStringValue("createdByUserId", CreatedByUserId);
             writer.WriteStringValue("description", Description);
             writer.WriteGuidValue("id", Id);

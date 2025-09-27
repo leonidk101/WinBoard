@@ -5,6 +5,7 @@ using Kanban.API.Features.BoardLists;
 using Kanban.API.Features.BoardLists.Endpoints;
 using Kanban.API.Features.Boards;
 using Kanban.API.Features.Boards.Endpoints;
+using Kanban.API.Features.TaskItems;
 using Kanban.API.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -44,7 +45,8 @@ builder.Services.AddDbContext<KanbanDbContext>(options =>
 
 builder.Services
     .AddBoardsApi()
-    .AddBoardListsApi();
+    .AddBoardListsApi()
+    .AddTaskItemsApi();
 
 builder.Services
     .AddIdentityApiEndpoints<ApplicationUser>(options =>

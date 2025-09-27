@@ -7,6 +7,8 @@ public class BoardList
     public Guid Id { get; set; }
 
     public Guid BoardId { get; set; }
+    
+    public int LastTaskOrder { get; set; }
 
     public required string Title { get; set; }
 

@@ -184,6 +184,9 @@ namespace Kanban.API.Migrations
                         .HasMaxLength(450)
                         .HasColumnType("character varying(450)");
 
+                    b.Property<int>("LastTaskOrder")
+                        .HasColumnType("integer");
+
                     b.Property<int>("Order")
                         .HasColumnType("integer");
 
@@ -252,7 +255,7 @@ namespace Kanban.API.Migrations
                     b.HasIndex("BoardListId", "Order")
                         .IsUnique();
 
-                    b.ToTable("Tasks", (string)null);
+                    b.ToTable("TaskItems", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

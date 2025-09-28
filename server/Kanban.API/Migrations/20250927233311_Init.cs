@@ -187,6 +187,7 @@ namespace Kanban.API.Migrations
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     BoardId = table.Column<Guid>(type: "uuid", nullable: false),
+                    LastTaskOrder = table.Column<int>(type: "integer", nullable: false),
                     Title = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     Order = table.Column<int>(type: "integer", nullable: false),
                     CreatedAt = table.Column<DateTimeOffset>(type: "timestamptz", nullable: false, defaultValueSql: "now()"),
@@ -211,7 +212,7 @@ namespace Kanban.API.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Tasks",
+                name: "TaskItems",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -225,9 +226,9 @@ namespace Kanban.API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Tasks", x => x.Id);
+                    table.PrimaryKey("PK_TaskItems", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Tasks_BoardLists_BoardListId",
+                        name: "FK_TaskItems_BoardLists_BoardListId",
                         column: x => x.BoardListId,
                         principalTable: "BoardLists",
                         principalColumn: "Id",
@@ -302,13 +303,13 @@ namespace Kanban.API.Migrations
                 column: "Name");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Tasks_BoardListId",
-                table: "Tasks",
+                name: "IX_TaskItems_BoardListId",
+                table: "TaskItems",
                 column: "BoardListId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Tasks_BoardListId_Order",
-                table: "Tasks",
+                name: "IX_TaskItems_BoardListId_Order",
+                table: "TaskItems",
                 columns: new[] { "BoardListId", "Order" },
                 unique: true);
         }
@@ -332,7 +333,7 @@ namespace Kanban.API.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Tasks");
+                name: "TaskItems");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

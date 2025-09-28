@@ -8,7 +8,7 @@ namespace Kanban.API.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<TaskItem> builder)
         {
-            builder.ToTable("Tasks");
+            builder.ToTable("TaskItems");
 
             builder.HasKey(x => x.Id);
 

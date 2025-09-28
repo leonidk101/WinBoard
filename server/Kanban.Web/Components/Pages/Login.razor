@@ -1,0 +1,38 @@
+@page "/login"
+@inject IJSRuntime JS
+
+<h3>Login</h3>
+
+<div class="login-container">
+    <form onsubmit="return false;">
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input id="email" type="email" @bind="Email" />
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input id="password" type="password" @bind="Password" />
+        </div>
+
+        <button type="button" @onclick="OnLogin">Login</button>
+    </form>
+
+    @if (!string.IsNullOrEmpty(Message))
+    {
+        <p class="message">@Message</p>
+    }
+</div>
+
+@code {
+    private string Email { get; set; } = string.Empty;
+    private string Password { get; set; } = string.Empty;
+    private string? Message;
+
+    private async Task OnLogin()
+    {
+        Message = $"You entered Email: {Email}, Password: {Password}";
+
+        await JS.InvokeVoidAsync("console.log", Message);
+    }
+}
